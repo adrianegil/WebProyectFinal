@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<title>#{msg.lbl_RentaCarLogin}</title>
+	<ui:insert name="head" />
+</h:head>
+
+<h:body styleClass="RedModena Geometry" style="height:auto;">
+	<h:form prependId="false">
+		<div class="Wid90 DispBlock MarAuto MarTopPerc5 TexAlCenter">
+			<div class="Wid33 MarAuto WidAutoOnMobile">
+
+				<div class="EmptyBox30"></div>
+				<p:messages for="securityMessages" globalOnly="true"
+					showDetail="true" showSummary="false" />
+				<div class="Card ShadowEffect">
+					<div class="EmptyBox20"></div>
+					<div class="Wid100 OvHidden BigTopic Fs30">
+						<i class="icon-security Fs60 DispBlock"></i> #{msg.lbl_Login}
+					</div>
+					<div class="EmptyBox30"></div>
+					<div class="Wid100">
+						<p:inputText id="username" value=""
+							placeholder="#{msg.label_username}" required="true"
+							styleClass="Wid80 TexAlCenter Fs18" />
+						<p:message for="username" />
+					</div>
+					<div class="EmptyBox10"></div>
+					<div class="Wid100">
+						<p:inputText id="password" type="password" value=""
+							required="true" placeholder="#{msg.label_password}"
+							styleClass="Wid80 TexAlCenter Fs18" />
+						<p:message for="password" />
+					</div>
+					<div class="EmptyBox30"></div>
+					<div class="Wid100 Fleft Responsive100">
+						<p:commandButton ajax="false" value="#{msg.label_login}"
+							icon="fa fa-sign-in" style="width: 320px"
+							styleClass="Fs18 White RaisedButton FloatNoneOnMobile" />
+					</div>
+
+				</div>
+				<div class="Wid100 TexAlCenter MarTop20 Fs14 FontRobotoRegular Gray">
+					Power by GilSoft CopyRight <i class="fa fa-copyright"></i> 2019
+				</div>
+			</div>
+		</div>
+	</h:form>
+
+	<h:outputStylesheet name="css/core-layout.css" library="modena-layout" />
+	<h:outputStylesheet name="css/animate.css" library="modena-layout" />
+	<h:outputStylesheet name="css/modena-font.css" library="modena-layout" />
+	<h:outputStylesheet name="css/ripple-effect.css"
+		library="modena-layout" />
+	<h:outputStylesheet name="css/font-awesome.css" library="modena-layout" />
+	<h:outputStylesheet name="css/modena-layout.css"
+		library="modena-layout" />
+</h:body>
+
+</html>

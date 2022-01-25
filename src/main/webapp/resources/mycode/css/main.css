@@ -1,0 +1,149 @@
+/* Header */
+#header {
+	height: 150px;
+	margin: 0 15px;
+}
+
+/* Logo */
+#logo {
+	float: left;
+	padding-top: 10px;
+	color: orange;
+}
+
+#logo h1 {
+	float: left;
+	margin: 0;
+	padding: 0;
+	letter-spacing: 0px;
+	font-size: 2em;
+}
+
+#logo h2 {
+	float: right;
+	margin: 0;
+	padding: 0 0 0 1em;
+	font-size: medium;
+	font-style: italic;
+	color: gray;
+}
+
+/* Menu */
+#menu {
+	height: 0px;
+	margin: 0 auto;
+	float: right;
+	padding-top: 12px;
+	padding-right: 190px;
+	border: none;
+    text-shadow: 0px 1px 0px rgba(0,0,0,0.7);
+}
+
+#menu ul {
+	margin: 0;
+	padding: 5px 0 0 0;
+	list-style: none;
+	line-height: normal;
+	border: none;
+}
+
+#menu li {
+	border: none;
+}
+
+#menu a {
+	display: block;
+	padding: 5px;
+	border-left: 1px solid #FF4430;
+	color: orange;
+	border: none;
+}
+
+#menu a:hover {
+	text-decoration: underline;
+	border: none;
+	background: #FFFFFF url(../../images/bgx.jpg) repeat-x;
+	color: white;
+}
+
+#menu .first a {
+	border: none;
+	background: #FFFFFF url(../../images/img5.gif) repeat-x;
+}
+
+/* Content */
+#content {
+	padding: 3px;
+	background: #FFFFFF url(../../images/img5.gif) repeat-x;
+}
+
+#colOne {
+	float: left;
+	width: 12%;
+	padding: 2px;
+	font-size: 0.85em;
+}
+
+#colTwo {
+	float: left;
+	width: 73%;
+	padding: 2px;
+}
+
+#colTwo h2 {
+	margin-bottom: .3em;
+	font-size: 2em;
+}
+
+#colThree {
+	float: left;
+	width: 14%;
+	padding: 2px;
+	font-size: 0.85em;
+}
+
+/* Footer */
+#footer {
+	padding: 15px 0;
+	background: url(../../images/img4.gif) repeat-x;
+}
+
+#footer p {
+	margin: 0;
+	text-align: center;
+	height: 16px;
+}
+
+/* Boxed */
+.boxed h2 {
+	margin: 0;
+	padding: 10px 0 3px 10px;
+	background: #CADAFF url(../../images/img2.gif) no-repeat;
+	font-size: 1.3em;
+	text-align: center;
+}
+
+.boxed h3 {
+	margin: 0;
+	font-size: 1em;
+}
+
+.boxed p,.boxed ul {
+	margin-top: 0;
+}
+
+.boxed ul {
+	margin-left: 0;
+	padding-left: 0;
+	list-style-position: inside;
+}
+
+.boxed-content {
+	padding: 10px;
+	background: #EAF0FF;
+	border-left: 2px solid #CADAFF;
+}
+
+.blinking {
+	color: cyan;
+}

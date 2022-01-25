@@ -1,0 +1,38 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pm="http://primefaces.org/modena">
+
+    <div class="Animated05" id="layout-menu-cover">
+        <h:form id="menuform">
+            <pm:menu>
+                <p:menuitem id="rmhome" value="#{msg.lbl_HomePage}" icon="fa fa-bank Fs16 Black" url="/welcome" />
+
+                <p:submenu id="rm_sm1" label="#{msg.lbl_ManageUsers}" icon="fa fa-male Fs16 Black" rendered="#{p:ifAnyGranted('ADMIN')}">
+                         <p:menuitem id="rm" value="#{msg.lbl_AccionListUsers}" icon="fa fa-users Fs16 Black" url="/security-users" />
+                    </p:submenu>
+
+                <p:submenu id="rm_sm2" label="#{msg.lbl_Admin}" icon="fa fa-list-alt Fs16 Black" rendered="#{p:ifAnyGranted('PLANNER')}">
+                    <p:menuitem id="rm20" value="#{msg.lbl_AccionListCars}" icon="fa fa-table Fs16 Black" url="/car-list" />
+                    <p:menuitem id="rm21" value="#{msg.lbl_AccionListContracts}" icon="fa fa-table Fs16 Black" url="/contract-list" />
+                    <p:menuitem id="rm22" value="#{msg.lbl_AccionListDrivers}" icon="fa fa-table Fs16 Black" url="/driver-list" />
+                    <p:menuitem id="rm23" value="#{msg.lbl_AccionListTourist}" icon="fa fa-table Fs16 Black" url="/tourist-list" />
+                </p:submenu>
+
+                <p:submenu id="rm_sm3" label="#{msg.lbl_Config}" icon="fa fa-wrench Fs16 Black">
+                    <p:submenu id="rm_sm31" label="#{msg.lbl_Languaje}" icon="fa fa-flag-checkered Fs16 Black">
+                        <p:menuitem id="rm310" value="#{msg.lbl_Spanish}" icon="fa fa-flag Fs16 Black" ajax="false" actionListener="#{localeBean.changeLanguage('es')}"/>
+                        <p:menuitem id="rm311" value="#{msg.lbl_English}" icon="fa fa-flag-o Fs16 Black" ajax="false" actionListener="#{localeBean.changeLanguage('en')}" />
+                    </p:submenu>
+                </p:submenu>
+
+                <p:menuitem id="rmexit" value="#{msg.lbl_Exit}" icon="fa fa-sign-out Fs16 Black" url="/logout" />
+            </pm:menu>
+        </h:form>
+
+    </div>
+
+</ui:composition>

@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/pages/template/layout.xhtml">
+
+    <ui:define name="subheader">
+
+    </ui:define>
+    <ui:define name="content">
+
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <div class="Card ShadowEffect">
+
+                    <h:form id="form">
+                        <p:dataTable id="singleDT" var="selectedContract" value="#{contractBean.contractList}"
+                                     selectionMode="single"
+                                     selection="#{contractBean.selectedContract}"
+                                     rowKey="#{selectedContract.contractCod}" rows="4"
+                                     paginator="true"
+                                     style="margin-top: 5px;" rendered="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}">
+
+                            <f:facet name="{Exporters}">
+                                <h:commandLink>
+                                    <i class="fa fa-fw fa-file-excel-o"/>
+                                    <p:dataExporter type="xls" target="singleDT" fileName="contracts"/>
+                                </h:commandLink>
+
+                                <h:commandLink>
+                                    <i class="fa fa-fw fa-file-pdf-o"/>
+                                    <p:dataExporter type="pdf" target="singleDT" fileName="contracts"/>
+                                </h:commandLink>
+                            </f:facet>
+
+
+                            <f:facet name="header">
+                                #{msg.lbl_ListofContracts}
+                            </f:facet>
+
+
+                            <p:column headerText="#{msg.lbl_ContractNumber}">
+                                <h:outputText value="#{selectedContract.contractCod}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_TouristName}">
+                                <h:outputText value="#{selectedContract.tourist}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_Car}">
+                                <h:outputText value="#{selectedContract.car}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_DriveName}">
+                                <h:outputText value="#{selectedContract.driver}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_PaymentWay}">
+                                <h:outputText value="#{selectedContract.paymentWay}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_BeginDate}">
+                                <h:outputText value="#{selectedContract.beginDate}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_EndDate}">
+                                <h:outputText value="#{selectedContract.endDate}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_DeliveryDate}">
+                                <h:outputText value="#{selectedContract.deliveryDateCar}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_CantDayExt}">
+                                <h:outputText value="#{selectedContract.cantDaysExt}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_TotalCost}">
+                                <h:outputText value="#{selectedContract.totalCost}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_ContractorName}">
+                                <h:outputText value="#{selectedContract.contractorName}"/>
+                            </p:column>
+
+                            <f:facet name="footer">
+                                <p:commandButton process="singleDT" update=":form:contractDetail" style="width: 250px"
+                                                 icon="fa fa-search Fs16 White" value="#{msg.lbl_View}"
+                                                 oncomplete="PF('contractInfoDialog').show()"/>
+                                <p:commandButton process="singleDT" update=":form:contractDelete" style="width: 250px"
+                                                 icon="fa fa-trash Fs16 White" value="#{msg.lbl_Delete}"
+                                                 oncomplete="PF('contractDeletDialog').show()"/>
+                                <p:commandButton process="singleDT" icon="fa fa-repeat Fs16" value="#{msg.lbl_Concluded}" update=":form:singleDT"
+                                                 style="width: 250px" actionListener="#{contractBean.update}" ajax="false"/>
+                                <p:commandButton process="singleDT" icon="fa fa-plus-circle Fs16 White"
+                                                 value="#{msg.lbl_New}" style="width: 250px"
+                                                 onclick="PF('contractAddDialog').show()"/>
+                            </f:facet>
+                        </p:dataTable>
+
+                        <p:dialog header="#{msg.lbl_Information}" widgetVar="contractInfoDialog" modal="true"
+                                  showEffect="clip"
+                                  hideEffect="clip"
+                                  resizable="false" closable="true">
+                            <p:outputPanel id="contractDetail" style="text-align:center;">
+                                <p:panelGrid columns="2" rendered="#{not empty contractBean.selectedContract}"
+                                             cellpadding="5">
+
+                                    <h:outputText value="Cod:"/>
+                                    <h:outputText value="#{contractBean.selectedContract.contractCod}"/>
+
+                                    <h:outputText value="#{msg.lbl_TouristName}"/>
+                                    <h:outputText value="#{contractBean.selectedContract.tourist}"/>
+
+                                    <h:outputText value="#{msg.lbl_Car}:"/>
+                                    <h:outputText value="#{contractBean.selectedContract.car}"/>
+
+                                    <h:outputText value="#{msg.lbl_DriveName}:"/>
+                                    <h:outputText value="#{contractBean.selectedContract.driver}"/>
+
+                                    <h:outputText value="#{msg.lbl_PaymentWay}:"/>
+                                    <h:outputText value="#{contractBean.selectedContract.paymentWay}"/>
+
+                                    <h:outputText value="#{msg.lbl_BeginDate}:"/>
+                                    <h:outputText value="#{contractBean.selectedContract.beginDate}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+
+                                    <h:outputText value="#{msg.lbl_EndDate}:"/>
+                                    <h:outputText value="#{contractBean.selectedContract.endDate}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+
+                                    <h:outputText value="#{msg.lbl_DeliveryDate}:"/>
+                                    <h:outputText value="#{contractBean.selectedContract.deliveryDateCar}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+
+                                    <h:outputText value="#{msg.lbl_CantDayExt}:"/>
+                                    <h:outputText value="#{contractBean.selectedContract.cantDaysExt}"/>
+
+                                    <h:outputText value="#{msg.lbl_TotalCost}:"/>
+                                    <h:outputText value="#{contractBean.selectedContract.totalCost}"/>
+
+                                    <h:outputText value="#{msg.lbl_ContractorName}:"/>
+                                    <h:outputText value="#{contractBean.selectedContract.contractorName}"/>
+
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+                        <p:dialog header="#{msg.lbl_ConfirmDelete}" widgetVar="contractDeletDialog" modal="true"
+                                  showEffect="fade"
+                                  hideEffect="fade"
+                                  resizable="false" global="true">
+
+
+                            <p:outputPanel id="contractDelete" style="text-align:center;">
+                                <h:outputText
+                                        value="#{msg.lbl_ConfirmDeleteLarg} #{contractBean.selectedContract.contractCod}"/>
+
+                                <h:panelGrid id="grid" rendered="#{not empty contractBean.selectedContract}" columns="2"
+                                             cellpadding="5">
+
+                                    <p:commandButton icon="fa fa-trash Fs16 White" value="#{msg.lbl_Delete}"
+                                                     oncomplete="PF('contractDeletDialog').hide()"
+                                                     update=":form:singleDT" actionListener="#{contractBean.delete}"/>
+                                    <p:commandButton icon="fa fa-remove Fs16 White" value="#{msg.lbl_Cancel}"
+                                                     type="button" onclick="PF('contractDeletDialog').hide()"/>
+
+                                </h:panelGrid>
+                            </p:outputPanel>
+
+                        </p:dialog>
+
+                    </h:form>
+
+                    <p:dialog header="#{msg.lbl_NewContract}" widgetVar="contractAddDialog" showEffect="clip"
+                              hideEffect="clip"
+                              resizable="false" closable="true" modal="true">
+                        <h:form id="addContract">
+
+                            <p:panelGrid columns="2" cellpadding="5">
+
+                                <p:outputLabel value="#{msg.lbl_Tourist}:" for="tourist"/>
+                                <p:selectOneMenu id="tourist" value="#{contractBean.tourist.touristCod}" effect="fold"
+                                                 required="true" converter="utils.EntityConverter">
+                                    <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{touristBean.touristList}" var="tourist"
+                                                   itemLabel="#{tourist}" itemValue="#{tourist.touristCod}"/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="#{msg.lbl_Car}:" for="car"/>
+                                <p:selectOneMenu id="car" value="#{contractBean.car.carCod}" effect="fold"
+                                                 converter="utils.EntityConverter"
+                                                 required="true">
+                                    <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{carBean.availableCarList}" var="car" itemLabel="#{car}"
+                                                   itemValue="#{car.carCod}"/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="#{msg.lbl_BeginDate}:" for="begindate"/>
+                                <p:calendar id="begindate" pattern="dd/MM/yyyy" showOn="button"
+                                            value="#{contractBean.contract.beginDate}"
+                                            mindate="#{dateBean.today}" maxdate="#{dateBean.today}" required="true"/>
+
+                                <p:outputLabel for="enddate" value="#{msg.lbl_EndDate}:"/>
+                                <p:calendar id="enddate" pattern="dd/MM/yyyy" showOn="button" styleClass="Red"
+                                            value="#{contractBean.contract.endDate}"
+                                            mindate="#{dateBean.tomorrow}" required="true"/>
+
+                                <p:outputLabel value="#{msg.lbl_PaymentWay}:" for="paymentway"/>
+                                <p:selectOneMenu id="paymentway" value="#{contractBean.contract.paymentWay}"
+                                                 required="true">
+                                    <f:selectItem itemLabel="Tarjeta de Crédito" itemValue="Tarjeta de Crédito"/>
+                                    <f:selectItem itemLabel="Efectivo" itemValue="Efectivo"/>
+                                    <f:selectItem itemLabel="Cheque" itemValue="Cheque"/>
+                                </p:selectOneMenu>
+
+                                    <p:outputLabel value="#{msg.lbl_Driver}:" for="driver" />
+                                    <p:selectOneMenu id="driver" value="#{contractBean.driver.drivCod}" effect="fold" >
+                                        <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{driverBean.availableDriverList}" var="driver" itemLabel="#{driver}" itemValue="#{driver.drivCod}"/>
+                                    </p:selectOneMenu>
+
+                                <h:outputLabel value="#{msg.lbl_ContractorName}:"/>
+                                <h:outputText value="#{userBean.userLogged}"/>
+
+                            </p:panelGrid>
+
+                            <p:separator/>
+
+                            <p:commandButton value="#{msg.lbl_Accept}" update=":form:singleDT"
+                                             actionListener="#{contractBean.save}" ajax="false"
+                                            oncomplete="PF('contractAddDialog').hide()" icon="fa fa-check Fs16 White"> </p:commandButton>
+
+                        </h:form>
+                    </p:dialog>
+
+                </div>
+            </div>
+        </div>
+
+
+    </ui:define>
+</ui:composition>
+</html>

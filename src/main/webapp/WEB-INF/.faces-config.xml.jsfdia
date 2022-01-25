@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::0" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="home::#pages#welcome#welcome.xhtml"
+    NAME="output" PATH="/pages/welcome/welcome.xhtml"
+    TARGET="rules:#pages#welcome#welcome.xhtml" TITLE="home" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="welcome::#pages#welcome#welcome.xhtml"
+    NAME="output1" PATH="/pages/welcome/welcome.xhtml"
+    TARGET="rules:#pages#welcome#welcome.xhtml" TITLE="welcome" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#pages#welcome#welcome.xhtml"
+    NAME="output2" PATH="/pages/welcome/welcome.xhtml"
+    TARGET="rules:#pages#welcome#welcome.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="login::#pages#security#login.xhtml"
+    NAME="output3" PATH="/pages/security/login.xhtml"
+    TARGET="rules:#pages#security#login.xhtml" TITLE="login" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="success::#pages#welcome#welcome.xhtml"
+    NAME="output4" PATH="/pages/welcome/welcome.xhtml"
+    TARGET="rules:#pages#welcome#welcome.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="failure::#pages#security#login.xhtml"
+    NAME="output6" PATH="/pages/security/login.xhtml"
+    TARGET="rules:#pages#security#login.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="error::#pages#error.xhtml" NAME="output5"
+    PATH="/pages/error.xhtml" TARGET="rules:#pages#error.xhtml"
+    TITLE="error" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="access-denied::#pages#access-denied.xhtml"
+    NAME="output7" PATH="/pages/access-denied.xhtml"
+    TARGET="rules:#pages#access-denied.xhtml" TITLE="access-denied" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="user#all::#pages#security#users.xhtml"
+    NAME="output8" PATH="/pages/security/users.xhtml"
+    TARGET="rules:#pages#security#users.xhtml" TITLE="user/all" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="user#create::#pages#security#createUser.xhtml" NAME="output9"
+    PATH="/pages/security/createUser.xhtml"
+    TARGET="rules:#pages#security#createUser.xhtml" TITLE="user/create" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="register::#pages#security#createUser.xhtml"
+    NAME="output10" PATH="/pages/security/createUser.xhtml"
+    TARGET="rules:#pages#security#createUser.xhtml" TITLE="register" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="change-password::#pages#security#change-password.xhtml"
+    NAME="output11" PATH="/pages/security/change-password.xhtml"
+    TARGET="rules:#pages#security#change-password.xhtml"
+    TITLE="change-password" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#security#login.xhtml"
+  PATH="/pages/security/login.xhtml" SHAPE="304,401,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#security#users.xhtml"
+  PATH="/pages/security/users.xhtml" SHAPE="304,737,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#welcome#welcome.xhtml"
+  PATH="/pages/welcome/welcome.xhtml" SHAPE="304,401,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#error.xhtml" PATH="/pages/error.xhtml"
+  SHAPE="304,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#security#createUser.xhtml"
+  PATH="/pages/security/createUser.xhtml" SHAPE="304,401,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#access-denied.xhtml"
+  PATH="/pages/access-denied.xhtml" SHAPE="304,401,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#security#change-password.xhtml"
+  PATH="/pages/security/change-password.xhtml" SHAPE="304,497,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

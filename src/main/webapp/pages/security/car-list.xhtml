@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/pages/template/layout.xhtml">
+
+    <ui:define name="subheader">
+
+    </ui:define>
+    <ui:define name="content">
+
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <div class="Card ShadowEffect">
+
+                    <h:form id="form">
+                        <p:dataTable id="singleDT" var="selectedCar" value="#{carBean.carList}" selectionMode="single"
+                                     selection="#{carBean.selectedCar}" rowKey="#{selectedCar.carCod}" rows="6" paginator="true"
+                                     style="margin-top: 5px;" rendered="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}">
+
+                            <f:facet name="{Exporters}">
+                                <h:commandLink>
+                                    <i class="fa fa-fw fa-file-excel-o"/>
+                                    <p:dataExporter type="xls" target="singleDT" fileName="cars"/>
+                                </h:commandLink>
+
+                                <h:commandLink>
+                                    <i class="fa fa-fw fa-file-pdf-o"/>
+                                    <p:dataExporter type="pdf" target="singleDT" fileName="cars"/>
+                                </h:commandLink>
+                            </f:facet>
+
+                            <f:facet name="header">
+                                #{msg.lbl_ListCars}
+                            </f:facet>
+
+                            <p:column headerText="#{msg.lbl_BadgeCar}">
+                                <h:outputText value="#{selectedCar.badgeNumb}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_MarkCar}">
+                                <h:outputText value="#{selectedCar.model.mark.markName}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_ModelCar}">
+                                <h:outputText value="#{selectedCar.model.modelName}"/>
+                            </p:column>
+
+                            <p:column headerText="Color">
+                                <h:outputText value="#{selectedCar.color}"/>
+                            </p:column>
+
+                            <p:column headerText="CantKm">
+                                <h:outputText value="#{selectedCar.cantkm}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_SituationCar}">
+                                <h:outputText value="#{selectedCar.situation.situationName}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_RateCar}">
+                                <h:outputText value="#{selectedCar.rate.cost}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_SpecialRateCar}">
+                                <h:outputText value="#{selectedCar.rate.specialCost}"/>
+                            </p:column>
+
+                            <f:facet name="footer">
+                                <p:commandButton  process="singleDT" update=":form:carDetail" icon="fa fa-search Fs16 White"
+                                                 oncomplete="PF('carInfoDialog').show()" value="#{msg.lbl_View}" style="width: 250px"/>
+                                <p:commandButton  process="singleDT" update=":form:carDelete" icon="fa fa-trash Fs16 White"
+                                                 oncomplete="PF('carDeletDialog').show()" value="#{msg.lbl_Delete}" style="width: 250px"/>
+                                <p:commandButton  process="singleDT"  icon="fa fa-pencil Fs16 White" value="#{msg.lbl_Edit}" style="width: 250px"
+                                                  oncomplete="PF('carEditDialog').show()" update=":Edit:carEdit"/>
+                                <p:commandButton  process="singleDT" icon="fa fa-plus-circle Fs16 White" value="#{msg.lbl_New}" style="width: 250px"
+                                                 onclick="PF('carAddDialog').show()"/>
+                            </f:facet>
+                        </p:dataTable>
+
+                        <p:dialog header="#{msg.lbl_Information}" widgetVar="carInfoDialog" showEffect="clip"
+                                  hideEffect="clip" modal="true"
+                                  resizable="false" closable="true">
+                            <p:outputPanel id="carDetail" style="text-align:center;">
+                                <p:panelGrid columns="2" rendered="#{not empty carBean.selectedCar}" cellpadding="5">
+
+
+                                    <h:outputText value="Cod:"/>
+                                    <h:outputText value="#{carBean.selectedCar.carCod}"/>
+
+
+                                    <h:outputText value="#{msg.lbl_BadgeCar}"/>
+                                    <h:outputText value="#{carBean.selectedCar.badgeNumb}"/>
+
+
+                                    <h:outputText value="#{msg.lbl_MarkCar}"/>
+                                    <h:outputText value="#{carBean.selectedCar.model.mark.markName}"/>
+
+                                    <h:outputText value="#{msg.lbl_ModelCar}"/>
+                                    <h:outputText value="#{carBean.selectedCar.model.modelName}"/>
+
+                                    <h:outputText value="Color:"/>
+                                    <h:outputText value="#{carBean.selectedCar.color}"/>
+
+                                    <h:outputText value="CantKm:"/>
+                                    <h:outputText value="#{carBean.selectedCar.cantkm}"/>
+
+                                    <h:outputText value="#{msg.lbl_SituationCar}"/>
+                                    <h:outputText value="#{carBean.selectedCar.situation.situationName}"/>
+
+                                    <h:outputText value="#{msg.lbl_RateCar}"/>
+                                    <h:outputText value="#{carBean.selectedCar.rate.cost}"/>
+
+                                    <h:outputText value="#{msg.lbl_SpecialRateCar}:"/>
+                                    <h:outputText value="#{carBean.selectedCar.rate.specialCost}"/>
+
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog >
+
+                        <p:dialog header="#{msg.lbl_ConfirmDelete}" widgetVar="carDeletDialog" showEffect="fade"
+                                  hideEffect="fade" modal="true"
+                                  resizable="false" global="true">
+
+
+                            <p:outputPanel id="carDelete" style="text-align:center;">
+                                <h:outputText value="#{msg.lbl_ConfirmDeleteLarg}  #{carBean.selectedCar.badgeNumb}"/>
+
+                                <h:panelGrid id="grid" rendered="#{not empty carBean.selectedCar}" columns="2" cellpadding="5">
+
+                                    <p:commandButton  icon="fa fa-trash Fs16 White" value="#{msg.lbl_Delete}" update=":form:singleDT"
+                                                     actionListener="#{carBean.delete}" oncomplete="PF('carDeletDialog').hide()"/>
+                                    <p:commandButton icon="fa fa-remove Fs16 White" value="#{msg.lbl_Cancel}"
+                                                     onclick="PF('carDeletDialog').hide()"/>
+
+                                </h:panelGrid>
+                            </p:outputPanel>
+
+                        </p:dialog>
+
+                    </h:form>
+
+                    <h:form id="Edit">
+                        <p:dialog header="#{msg.lbl_Edit}" widgetVar="carEditDialog" showEffect="fold"
+                                  hideEffect="fold"
+                                  resizable="false" closable="true" modal="true">
+
+                            <p:outputPanel id="carEdit" style="text-align:center;">
+
+
+                                <p:panelGrid columns="2" cellpadding="5">
+
+                                    <p:outputLabel value="Cod:" for="cod0" />
+                                    <p:inputText id="cod0" value="#{carBean.selectedCar.carCod}"
+                                                 required="true" />
+
+                                    <p:outputLabel value="#{msg.lbl_BadgeCar}:" for="badge1"/>
+                                    <p:inputText id="badge1" value="#{carBean.selectedCar.badgeNumb}" required="true" validatorMessage="Incorrect Value">
+                                        <f:validateRegex  pattern="^[T0-9]*$" />
+                                    </p:inputText>
+
+                                    <p:outputLabel value="Cantkm:" for="cantkm1"/>
+                                    <p:spinner id="cantkm1" value="#{carBean.selectedCar.cantkm}" required="true"/>
+
+                                    <p:outputLabel value="Color:" for="color1"/>
+                                    <p:selectOneMenu id="color1" value="#{carBean.selectedCar.color}" effect="fold" editable="true" required="true">
+                                        <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Azul" itemValue="Azul"/>
+                                        <f:selectItem itemLabel="Amarillo" itemValue="Amarillo"/>
+                                        <f:selectItem itemLabel="Naranja" itemValue="Naranja"/>
+                                        <f:selectItem itemLabel="Verde" itemValue="Verde"/>
+                                        <f:selectItem itemLabel="Rojo" itemValue="Rojo"/>
+                                        <f:selectItem itemLabel="Morado" itemValue="Morado"/>
+                                        <f:selectItem itemLabel="Negro" itemValue="Negro"/>
+                                        <f:selectItem itemLabel="Blanco" itemValue="Blanco"/>
+                                        <f:selectItem itemLabel="Rosado" itemValue="Rosado"/>
+                                        <f:selectItem itemLabel="Gris" itemValue="Gris"/>
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel value="#{msg.lbl_RateCar}:" for="cost1"/>
+                                    <p:spinner id="cost1" value="#{carBean.selectedCar.rate.cost}" required="true"/>
+
+                                    <p:outputLabel value="#{msg.lbl_SpecialRateCar}:" for="specialcost1"/>
+                                    <p:spinner id="specialcost1" value="#{carBean.selectedCar.rate.specialCost}" required="true"/>
+
+                                </p:panelGrid>
+
+                                <p:separator/>
+
+                                <p:commandButton value="#{msg.lbl_Edit}" update=":form:singleDT"
+                                                 actionListener="#{carBean.update}" oncomplete="PF('carEditDialog').hide()"
+                                                 icon="fa fa-check Fs16 White">
+                                </p:commandButton>
+
+                            </p:outputPanel>
+
+                        </p:dialog>
+                    </h:form>
+
+
+                    <p:dialog header="#{msg.lbl_NewCar}" widgetVar="carAddDialog" showEffect="clip" hideEffect="clip"
+                              resizable="false" closable="true" modal="true">
+                        <h:form id="addCar">
+
+
+                            <p:panelGrid columns="2" cellpadding="5">
+
+
+                                <p:outputLabel value="#{msg.lbl_BadgeCar}:" for="badge"/>
+                                <p:inputText id="badge" value="#{carBean.car.badgeNumb}" required="true" validatorMessage="Incorrect Value">
+                                    <f:validateRegex  pattern="^[T0-9]*$" />
+                                </p:inputText>
+
+                                <p:outputLabel value="Cantkm:" for="cantkm"/>
+                                <p:spinner id="cantkm" value="#{carBean.car.cantkm}" required="true"/>
+
+                                <p:outputLabel value="#{msg.lbl_MarkCar}:" for="mark"/>
+                                <p:selectOneMenu id="mark"  effect="fold" required="true" value="#{carBean.mark.markCod}" >
+                                    <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{markBean.markList}" var="mark" itemLabel="#{mark.markName}" itemValue="#{mark.markCod}"/>
+                                    <p:ajax  update="model" listener="#{carBean.loadModelList}" />
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="#{msg.lbl_ModelCar}:" for="model"/>
+                                <p:selectOneMenu id="model"  effect="fold" value="#{carBean.model.modelCod}" converter="utils.EntityConverter">
+                                    <f:selectItems value="#{carBean.modelList}" var="model" itemLabel="#{model.modelName}" itemValue="#{model.modelCod}"/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="Color:" for="color"/>
+                                <p:selectOneMenu id="color" value="#{carBean.car.color}" effect="fold" editable="true" required="true">
+                                    <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Azul" itemValue="Azul"/>
+                                    <f:selectItem itemLabel="Amarillo" itemValue="Amarillo"/>
+                                    <f:selectItem itemLabel="Naranja" itemValue="Naranja"/>
+                                    <f:selectItem itemLabel="Verde" itemValue="Verde"/>
+                                    <f:selectItem itemLabel="Rojo" itemValue="Rojo"/>
+                                    <f:selectItem itemLabel="Morado" itemValue="Morado"/>
+                                    <f:selectItem itemLabel="Negro" itemValue="Negro"/>
+                                    <f:selectItem itemLabel="Blanco" itemValue="Blanco"/>
+                                    <f:selectItem itemLabel="Rosado" itemValue="Rosado"/>
+                                    <f:selectItem itemLabel="Gris" itemValue="Gris"/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="#{msg.lbl_RateCar}:" for="cost"/>
+                                <p:spinner id="cost" value="#{carBean.rate.cost}" required="true"/>
+
+                                <p:outputLabel value="#{msg.lbl_SpecialRateCar}:" for="specialcost"/>
+                                <p:spinner id="specialcost" value="#{carBean.rate.specialCost}" required="true"/>
+
+                            </p:panelGrid>
+
+                            <p:separator/>
+
+                            <p:commandButton value="#{msg.lbl_Accept}" update=":form:singleDT" actionListener="#{carBean.save}"
+                                            oncomplete="PF('carAddDialog').hide()" icon="fa fa-check Fs16 White"> </p:commandButton>
+
+                        </h:form>
+                    </p:dialog>
+
+                </div>
+            </div>
+        </div>
+
+
+    </ui:define>
+</ui:composition>
+</html>

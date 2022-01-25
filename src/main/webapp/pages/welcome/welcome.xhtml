@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/pages/template/layout.xhtml">
+
+	<ui:define name="subheader">
+        #{msgs.label_welcome}
+    </ui:define>
+	<ui:define name="content">
+
+		<div class="Container100">
+			<div class="ContainerIndent">
+				<div class="Card ShadowEffect  ">
+
+					<p:panel header="#{msg.lbl_UserInformation}">
+
+						<h:panelGrid id="grid" columns="2" cellpadding="5">
+
+							<h:outputText value="#{msg.lbl_Username}:"/>
+							<h:outputText value="#{userBean.userNameLogged}" />
+
+							<h:outputText value="#{msg.lbl_Fullname}:"/>
+							<h:outputText value="#{userBean.userLogged}"/>
+
+							<h:outputText value="Email:"/>
+							<h:outputText value="#{userBean.userEmail}" />
+
+						</h:panelGrid>
+
+					</p:panel>
+
+
+				</div>
+			</div>
+		</div>
+
+
+
+
+	</ui:define>
+</ui:composition>
+</html>

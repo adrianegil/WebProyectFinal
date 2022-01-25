@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/pages/template/layout.xhtml">
+
+    <ui:define name="subheader">
+
+    </ui:define>
+    <ui:define name="content">
+
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <div class="Card ShadowEffect">
+
+                    <h:form id="form">
+                        <p:dataTable id="singleDT" var="selectedTourist" value="#{touristBean.touristList}"
+                                     selectionMode="single"
+                                     selection="#{touristBean.selectedTourist}" rowKey="#{selectedTourist.touristCod}" rows="7"
+                                     paginator="true"
+                                     style="margin-top: 5px;" rendered="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}">
+
+                            <f:facet name="{Exporters}">
+                                <h:commandLink>
+                                    <i class="fa fa-fw fa-file-excel-o"/>
+                                    <p:dataExporter type="xls" target="singleDT" fileName="tourist"/>
+                                </h:commandLink>
+
+                                <h:commandLink>
+                                    <i class="fa fa-fw fa-file-pdf-o"/>
+                                    <p:dataExporter type="pdf" target="singleDT" fileName="tourist"/>
+                                </h:commandLink>
+                            </f:facet>
+
+                            <f:facet name="header">
+                                #{msg.lbl_ListofTourist}
+                            </f:facet>
+
+                            <p:column headerText="#{msg.lbl_Passport}">
+                                <h:outputText value="#{selectedTourist.passportNumb}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_Name}">
+                                <h:outputText value="#{selectedTourist.touristName}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_LastName}">
+                                <h:outputText value="#{selectedTourist.touristLastName}"/>
+                            </p:column>
+
+                            <p:column headerText="Sex">
+                                <h:outputText value="#{selectedTourist.touristSex}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_Age}">
+                                <h:outputText value="#{selectedTourist.touristAge}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_Contact}">
+                                <h:outputText value="#{selectedTourist.touristContact}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_Country}">
+                                <h:outputText value="#{selectedTourist.touristCountry.countryName}"/>
+                            </p:column>
+
+                            <p:column headerText="Email">
+                                <h:outputText value="#{selectedTourist.email}"/>
+                            </p:column>
+
+
+                            <f:facet name="footer">
+                                <p:commandButton process="singleDT" update=":form:touristDetail" style="width: 250px"
+                                                 icon="fa fa-search Fs16 White" value="#{msg.lbl_View}"
+                                                 oncomplete="PF('touristInfoDialog').show()"/>
+                                <p:commandButton process="singleDT" update=":form:touristDelete" style="width: 250px"
+                                                 icon="fa fa-trash Fs16 White" value="#{msg.lbl_Delete}"
+                                                 oncomplete="PF('touristDeletDialog').show()"/>
+                                <p:commandButton process="singleDT" icon="fa fa-pencil Fs16" value="#{msg.lbl_Edit}"
+                                                 style="width: 250px" update=":Edit:touristEdit" onclick="PF('touristEditDialog').show()"/>
+                                <p:commandButton process="singleDT" icon="fa fa-plus-circle Fs16 White"
+                                                 style="width: 250px"
+                                                 value="#{msg.lbl_New}"
+                                                 onclick="PF('touristAddDialog').show()"/>
+                            </f:facet>
+                        </p:dataTable>
+
+                        <p:dialog header="#{msg.lbl_Information}" widgetVar="touristInfoDialog" modal="true"
+                                  showEffect="clip" hideEffect="clip" resizable="false" closable="true">
+                            <p:outputPanel id="touristDetail" style="text-align:center;">
+                                <p:panelGrid columns="2" rendered="#{not empty touristBean.selectedTourist}" cellpadding="5">
+
+                                    <h:outputText value="Cod:"/>
+                                    <h:outputText value="#{touristBean.selectedTourist.touristCod}"/>
+
+                                    <h:outputText value="#{msg.lbl_Passport}:"/>
+                                    <h:outputText value="#{touristBean.selectedTourist.passportNumb}"/>
+
+                                    <h:outputText value="#{msg.lbl_Name}:"/>
+                                    <h:outputText value="#{touristBean.selectedTourist.touristName}"/>
+
+                                    <h:outputText value="#{msg.lbl_LastName}:"/>
+                                    <h:outputText value="#{touristBean.selectedTourist.touristLastName}"/>
+
+                                    <h:outputText value="Sex:"/>
+                                    <h:outputText value="#{touristBean.selectedTourist.touristSex}"/>
+
+                                    <h:outputText value="#{msg.lbl_Age}:"/>
+                                    <h:outputText value="#{touristBean.selectedTourist.touristAge}"/>
+
+                                    <h:outputText value="#{msg.lbl_Contact}:"/>
+                                    <h:outputText value="#{touristBean.selectedTourist.touristContact}"/>
+
+                                    <h:outputText value="#{msg.lbl_Country}:"/>
+                                    <h:outputText value="#{touristBean.selectedTourist.touristCountry.countryName}"/>
+
+                                    <h:outputText value="Email:"/>
+                                    <h:outputText value="#{touristBean.selectedTourist.email}"/>
+
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+                        <p:dialog header="#{msg.lbl_ConfirmDelete}" widgetVar="touristDeletDialog" modal="true"
+                                  showEffect="fade"
+                                  hideEffect="fade"
+                                  resizable="false" global="true">
+
+
+                            <p:outputPanel id="touristDelete" style="text-align:center;">
+                                <h:outputText value="#{msg.lbl_ConfirmDeleteLarg} #{touristBean.selectedTourist.touristName}"/>
+
+                                <h:panelGrid id="grid" rendered="#{not empty touristBean.selectedTourist}" columns="2"
+                                             cellpadding="5">
+
+                                    <p:commandButton icon="fa fa-trash Fs16 White" value="#{msg.lbl_Delete}"
+                                                     update=":form:singleDT" oncomplete="PF('touristDeletDialog').hide()"
+                                                     actionListener="#{touristBean.delete}"/>
+                                    <p:commandButton icon="fa fa-remove Fs16 White" value="#{msg.lbl_Cancel}"
+                                                     type="button" onclick="PF('touristDeletDialog').hide()"/>
+
+                                </h:panelGrid>
+                            </p:outputPanel>
+
+                        </p:dialog>
+
+                    </h:form>
+
+                    <h:form id="Edit">
+                        <p:dialog header="#{msg.lbl_Edit}" widgetVar="touristEditDialog" showEffect="fold" hideEffect="fold"
+                                  resizable="false" closable="true" modal="true">
+
+                            <p:outputPanel id="touristEdit" style="text-align:center;">
+
+
+                                <p:panelGrid  columns="2" cellpadding="5">
+
+                                    <p:outputLabel value="Cod:" for="cod1" />
+                                    <p:inputText id="cod1" value="#{touristBean.selectedTourist.touristCod}"
+                                                 required="true"/>
+
+                                    <p:outputLabel value="#{msg.lbl_Passport}:" for="passport1"/>
+                                    <p:inputText id="passport1"  value="#{touristBean.selectedTourist.passportNumb}"
+                                                 required="true">
+                                    </p:inputText>
+
+                                    <p:outputLabel value="#{msg.lbl_Name}:" for="name1"/>
+                                    <p:inputText id="name1" value="#{touristBean.selectedTourist.touristName}" required="true" validatorMessage="Only Letters for #{msg.lbl_Name}">
+                                        <f:validateRegex  pattern="^[a-zA-Z ]*$" />
+                                    </p:inputText>
+
+                                    <p:outputLabel value="#{msg.lbl_LastName}:" for="lastname1"/>
+                                    <p:inputText id="lastname1" value="#{touristBean.selectedTourist.touristLastName}" validatorMessage="Only Letters for #{msg.lbl_LastName}"
+                                                 required="true">
+                                        <f:validateRegex  pattern="^[a-zA-Z ]*$" />
+                                    </p:inputText>
+
+                                    <p:outputLabel value="Sex:" for="sex1"/>
+                                    <p:selectOneMenu id="sex1" value="#{touristBean.selectedTourist.touristSex}" effect="fold"
+                                                     editable="true" required="true">
+                                        <f:selectItem itemLabel="#{msg.lbl_Masculine}" itemValue="Masculino"/>
+                                        <f:selectItem itemLabel="#{msg.lbl_Feminine}" itemValue="Femenino"/>
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel value="#{msg.lbl_Age}:" for="age1"/>
+                                    <p:spinner id="age1" value="#{touristBean.selectedTourist.touristAge}" required="true" min="18"
+                                               max="100"/>
+
+                                    <p:outputLabel value="#{msg.lbl_Contact}:" for="contact1"/>
+                                    <p:inputText id="contact1" value="#{touristBean.selectedTourist.touristContact}"
+                                                 required="true">
+                                    </p:inputText>
+
+                                    <p:outputLabel value="#{msg.lbl_Country}:" for="country1"/>
+                                    <p:selectOneMenu id="country1" value="#{touristBean.country.countyCod}">
+                                        <f:selectItems value="#{countryBean.countryList}" var="country"
+                                                       itemLabel="#{country.countryName}" itemValue="#{country.countyCod}"/>
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel value="Email:" for="email1"/>
+                                    <p:inputText id="email1" value="#{touristBean.selectedTourist.email}" required="true"
+                                                 validatorMessage="Email is not valid">
+                                        <f:validateRegex
+                                                pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                                    </p:inputText>
+
+                                </p:panelGrid>
+
+                                <p:separator/>
+
+                                <p:commandButton value="#{msg.lbl_Edit}" update=":form:singleDT"
+                                                 actionListener="#{touristBean.update}" oncomplete="PF('touristEditDialog').hide()"
+                                                 icon="fa fa-check Fs16 White"> </p:commandButton>
+                            </p:outputPanel>
+
+                        </p:dialog>
+                    </h:form>
+
+                    <p:dialog header="#{msg.lbl_NewTourist}" widgetVar="touristAddDialog" showEffect="clip"
+                              hideEffect="clip"
+                              resizable="false" closable="true" modal="true">
+                        <h:form id="addTourist">
+
+                            <p:panelGrid columns="2" cellpadding="5">
+
+                                <p:outputLabel value="#{msg.lbl_Passport}:" for="passport"/>
+                                <p:inputText id="passport" value="#{touristBean.tourist.passportNumb}"
+                                             required="true">
+                                </p:inputText>
+
+                                <p:outputLabel value="#{msg.lbl_Name}:" for="name"/>
+                                <p:inputText id="name" value="#{touristBean.tourist.touristName}" required="true" validatorMessage="Only Letters for #{msg.lbl_Name}">
+                                    <f:validateRegex  pattern="^[a-zA-Z ]*$" />
+                                </p:inputText>
+
+                                <p:outputLabel value="#{msg.lbl_LastName}:" for="lastname"/>
+                                <p:inputText id="lastname" value="#{touristBean.tourist.touristLastName}" validatorMessage="Only Letters for #{msg.lbl_LastName}"
+                                             required="true">
+                                    <f:validateRegex  pattern="^[a-zA-Z ]*$" />
+                                </p:inputText>
+
+                                <p:outputLabel value="Sex:" for="sex"/>
+                                <p:selectOneMenu id="sex" value="#{touristBean.tourist.touristSex}" effect="fold"
+                                                 editable="true" required="true">
+                                    <f:selectItem itemLabel="#{msg.lbl_Masculine}" itemValue="Masculino"/>
+                                    <f:selectItem itemLabel="#{msg.lbl_Feminine}" itemValue="Femenino"/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="#{msg.lbl_Age}:" for="age"/>
+                                <p:spinner id="age" value="#{touristBean.tourist.touristAge}" required="true" min="18"
+                                           max="100"/>
+
+                                <p:outputLabel value="#{msg.lbl_Contact}:" for="contact"/>
+                                <p:inputText id="contact" value="#{touristBean.tourist.touristContact}"
+                                             required="true">
+                                </p:inputText>
+
+                                <p:outputLabel value="#{msg.lbl_Country}:" for="country"/>
+                                <p:selectOneMenu id="country" value="#{touristBean.country.countyCod}"
+                                                 required="true">
+                                    <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{countryBean.countryList}" var="country"
+                                                   itemLabel="#{country.countryName}" itemValue="#{country.countyCod}"/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="Email:" for="email"/>
+                                <p:inputText id="email" value="#{touristBean.tourist.email}" required="true"
+                                             validatorMessage="Email is not valid">
+                                    <f:validateRegex
+                                            pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                                </p:inputText>
+
+                            </p:panelGrid>
+
+                            <p:separator/>
+
+                            <p:commandButton value="#{msg.lbl_Accept}" oncomplete="PF('touristAddDialog').hide()"
+                                             icon="fa fa-check Fs16 White" update=":form:singleDT"
+                                             actionListener="#{touristBean.save}"> </p:commandButton>
+                        </h:form>
+                    </p:dialog>
+
+                </div>
+            </div>
+        </div>
+
+
+    </ui:define>
+</ui:composition>
+</html>

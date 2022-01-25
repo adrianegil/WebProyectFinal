@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/pages/template/layout.xhtml">
+    <ui:define name="content">
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <div class="Card ShadowEffect  ">
+                    <div class="Container100">
+                        <div class="ContainerIndent">
+                            <p:panelGrid columns="1" layout="grid" style="width:100%;">
+                                <h:panelGroup>
+                                    <h:form prependId="true" id="formCreate">
+                                        <p:messages id="messagges" showDetail="true" closable="true"
+                                                    showSummary="false" showIcon="true">
+                                            <p:autoUpdate/>
+                                        </p:messages>
+                                        <div class="ui-fluid">
+                                            <h2 class="BigTopic">#{msg.lbl_NewUser}</h2>
+                                            <div class="Container50 Responsive50">
+                                                <div class="ContainerIndent">
+                                                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank"
+                                                                 id="panelData1">
+                                                        <p:outputLabel value="#{msg.lbl_Username}:"
+                                                                       for="username"/>
+                                                        <p:inputText id="username"
+                                                                     value="#{userBean.user.username}"
+                                                                     required="true">
+                                                            <f:validateLength minimum="4" maximum="20" for="username"/>
+                                                            <f:validateRegex pattern="^[a-zA-Z0-9]*$"/>
+                                                        </p:inputText>
+                                                        <p:outputLabel value="#{msg.lbl_Fullname}" for="fullname"/>
+                                                        <p:inputText id="fullname"
+                                                                     value="#{userBean.user.fullname}"
+                                                                     required="true"
+                                                                     validatorMessage="Only Letters for #{msg.lbl_Fullname}">
+                                                            <f:validateLength minimum="4" maximum="60" for="fullname"/>
+                                                            <f:validateRegex pattern="^[a-zA-Z ]*$"/>
+                                                        </p:inputText>
+                                                        <p:outputLabel value="Email" for="email"/>
+                                                        <h:panelGroup>
+                                                            <p:inputText id="email" value="#{userBean.user.email}"
+                                                                         required="true" type="email">
+                                                                <f:validateRegex
+                                                                        pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                                                            </p:inputText>
+                                                        </h:panelGroup>
+
+                                                        <p:outputLabel value="Role" for="roles"/>
+                                                        <p:selectManyCheckbox id="roles" layout="grid" columns="3"
+                                                                              value="#{userBean.user.rolesSelected}"
+                                                                              required="true">
+                                                            <f:selectItem itemLabel="ROLE_ADMIN"
+                                                                          itemValue="ROLE_ADMIN"/>
+                                                            <f:selectItem itemLabel="ROLE_PLANNER"
+                                                                          itemValue="ROLE_PLANNER"/>
+                                                            <f:selectItem itemLabel="ROLE_GUEST"
+                                                                          itemValue="ROLE_GUEST"/>
+                                                        </p:selectManyCheckbox>
+
+                                                    </p:panelGrid>
+                                                </div>
+                                            </div>
+                                            <div class="Container50 Responsive50">
+                                                <div class="ContainerIndent">
+                                                    <p:panelGrid columns="1" styleClass="ui-panelgrid-blank"
+                                                                 layout="grid" id="panelData2">
+                                                        <p:outputLabel value="#{msg.label_password}:"
+                                                                       for="password"/>
+                                                        <p:password id="password"
+                                                                    value="#{userBean.user.password}" feedback="true"
+                                                                    label="Contraseña" required="true"
+                                                                    weakLabel="Débil"
+                                                                    goodLabel="Regular" strongLabel="Fuerte">
+                                                            <f:validateLength minimum="8" maximum="20" for="password"/>
+                                                        </p:password>
+
+                                                        <p:outputLabel value="#{msg.lbl_ConfirmPassword}:"
+                                                                       for="passwordConfirm"/>
+                                                        <p:password id="passwordConfirm"
+                                                                    value="#{userBean.user.passwordConfirm}"
+                                                                    feedback="true"
+                                                                    required="true"
+                                                                    weakLabel="Débil"
+                                                                    goodLabel="Regular" strongLabel="Fuerte">
+                                                            <f:validateLength minimum="8" maximum="20"
+                                                                              for="passwordConfirm"/>
+                                                        </p:password>
+
+                                                    </p:panelGrid>
+                                                </div>
+                                            </div>
+                                            <div class="Separator"></div>
+                                            <div class="Wid100 Responsive100">
+                                                <p:panelGrid columns="3" styleClass="ui-panelgrid-blank"
+                                                             layout="grid">
+                                                    <p:commandButton value="#{msg.lbl_Clean}"
+                                                                     icon="fa fa-recycle Fs16 White"
+                                                                     immediate="true" type="reset"
+                                                                     update=":formCreate:panelData1 :formCreate:panelData2">
+                                                        <p:resetInput target="formCreate"/>
+                                                        <f:setPropertyActionListener value="#{null}"
+                                                                                     target="#{userBean.user.rolesSelected}"/>
+                                                    </p:commandButton>
+                                                    <p:commandButton value="#{msg.lbl_Accept}" action="#{userBean.save}"
+                                                                     icon="fa fa-check Fs16 White"
+                                                                     update=":formCreate:panelData1 :formCreate:panelData2">
+                                                    </p:commandButton>
+                                                    <p:commandButton value="#{msg.lbl_Cancel}" action="index"
+                                                                     icon="fa fa-remove Fs16 White"
+                                                                     immediate="true"
+                                                                     update=":formCreate:panelData1 :formCreate:panelData2">
+                                                    </p:commandButton>
+                                                </p:panelGrid>
+                                            </div>
+                                        </div>
+                                    </h:form>
+                                </h:panelGroup>
+                            </p:panelGrid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

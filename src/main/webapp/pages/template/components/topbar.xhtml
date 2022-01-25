@@ -1,0 +1,61 @@
+<ui:composition
+
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://java.sun.com/jsf/html">
+    
+    
+    <!-- TOPBAR START -->
+    <div id="layout-topbar">
+        <a id="mobile-menu-button">
+            <span class="ButtonLine" id="ButtonLine1"></span>
+            <span class="ButtonLine" id="ButtonLine2"></span>
+            <span class="ButtonLine" id="ButtonLine3"></span>
+        </a>
+       <!-- <a href="/modena/dashboard.xhtml" id="logo">
+            <h:graphicImage name="images/logo.svg" styleClass="Fleft" library="modena-layout" />
+        </a>
+
+        <a id="show-top-menu" class="ShowOnMobile ripplelink"><i class="icon-more_vert" id="active"></i><i class="icon-close DispNone" id="passive"></i> </a>
+-->
+        <h:outputLabel class="fa" style="font-size: 40px;color: white">#{msg.lbl_RentACarSystem}</h:outputLabel>
+
+        <ul id="top-menu">
+           <!-- <li>
+                <a class="ripplelink"><i class="icon-search"></i> <span class="ShowOnMobile">Search Here</span></a>
+                <ul>
+                    <li>
+                        <a href="#"><i class="icon-search"></i><input type="text"/> </a>
+                    </li>
+                </ul>
+            </li>
+-->
+
+            <li>
+                <a class="ripplelink" ><i class="icon-assignment_ind"></i> <span class="ShowOnMobile">Settings</span></a>
+
+                <ul>
+                    <li><a href="/welcome"><span class="Black"><i class="icon-person Fs30 DispBlock"></i>  #{msg.lbl_UserInformation}</span></a></li>
+                    <li><a href="/change-password"><span class="Black"><i class="icon-vpn_key Fs30 DispBlock"></i>  #{msg.lbl_ChangePassword}</span></a></li>
+                </ul>
+
+            </li>
+            <li>
+                <a class="ripplelink"><i class="icon-flag2"></i> <span class="ShowOnMobile">Settings</span></a>
+                <ul>
+                    <li><h:form><p:commandLink actionListener="#{localeBean.changeLanguage('es')}" ><i class="icon-flag2"></i> #{msg.lbl_Spanish}</p:commandLink></h:form></li>
+                    <li><h:form><p:commandLink actionListener="#{localeBean.changeLanguage('en')}"><i class="icon-flag"></i> #{msg.lbl_English}</p:commandLink> </h:form></li>
+                </ul>
+            </li>
+            <li>
+                <a class="ripplelink"><i class="icon-power"></i> <span class="ShowOnMobile">System</span></a>
+                <ul>
+                    <li><a href="/logout"><span class="Red"><i class="icon-vpn_key Fs30 DispBlock"></i> Logout</span></a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- TOPBAR END -->
+    
+</ui:composition>

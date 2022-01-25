@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+              http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+              version="2.2">
+    <application>
+        <locale-config>
+            <default-locale>es</default-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+
+        <resource-bundle>
+            <base-name>i18n.messages</base-name>
+            <var>msg</var>
+        </resource-bundle>
+
+        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+    </application>
+
+    <converter>
+        <converter-id>utils.EntityConverter</converter-id>
+        <converter-class>cu.cujae.pweb.jsf2SpringBoot.util.EntityConverter</converter-class>
+    </converter>
+
+    <component>
+        <component-type>org.primefaces.component.ModenaMenu</component-type>
+        <component-class>cu.cujae.pweb.jsf2SpringBoot.modena.component.menu.ModenaMenu</component-class>
+    </component>
+
+    <lifecycle>
+        <phase-listener>cu.cujae.pweb.jsf2SpringBoot.security.util.LoginErrorPhaseListener</phase-listener>
+    </lifecycle>
+
+    <render-kit>
+        <renderer>
+            <component-family>org.primefaces.component</component-family>
+            <renderer-type>org.primefaces.component.ModenaMenuRenderer</renderer-type>
+            <renderer-class>cu.cujae.pweb.jsf2SpringBoot.modena.component.menu.ModenaMenuRenderer</renderer-class>
+        </renderer>
+    </render-kit>
+
+    <navigation-rule>
+        <from-view-id></from-view-id>
+        <navigation-case>
+            <from-outcome>home</from-outcome>
+            <to-view-id>/pages/welcome/welcome.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>welcome</from-outcome>
+            <to-view-id>/pages/welcome/welcome.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/pages/welcome/welcome.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/pages/security/login.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/pages/welcome/welcome.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/pages/security/login.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>error</from-outcome>
+            <to-view-id>/pages/error.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>access-denied</from-outcome>
+            <to-view-id>/pages/access-denied.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>user/all</from-outcome>
+            <to-view-id>/pages/security/users.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>user/create</from-outcome>
+            <to-view-id>/pages/security/createUser.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>register</from-outcome>
+            <to-view-id>/pages/security/createUser.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>change-password</from-outcome>
+            <to-view-id>/pages/security/change-password.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+</faces-config>

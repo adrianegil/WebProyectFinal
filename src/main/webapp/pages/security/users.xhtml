@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/pages/template/layout.xhtml">
+
+    <ui:define name="subheader">
+
+    </ui:define>
+    <ui:define name="content">
+
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <div class="Card ShadowEffect">
+
+                    <h:form id="form">
+
+                        <p:dataTable id="singleDT" var="user" value="#{userBean.userList}" selectionMode="single"
+                                     selection="#{userBean.selectedUser}" rowKey="#{user.id}" rows="6"
+                                     paginator="true"
+                                     style="margin-top: 5px;" rendered="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}">
+
+                            <f:facet name="{Exporters}">
+                                <h:commandLink>
+                                    <i class="fa fa-fw fa-file-excel-o "/>
+                                    <p:dataExporter type="xls" target="singleDT" fileName="users"/>
+                                </h:commandLink>
+
+                                <h:commandLink>
+                                    <i class="fa fa-fw fa-file-pdf-o"/>
+                                    <p:dataExporter type="pdf" target="singleDT" fileName="users"/>
+                                </h:commandLink>
+                            </f:facet>
+
+                            <f:facet name="header">
+                                #{msg.lbl_ListUsers}
+                            </f:facet>
+
+                            <p:column headerText="#{msg.lbl_Fullname}">
+                                <h:outputText value="#{user.fullname}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_Username}">
+                                <h:outputText value="#{user.username}"/>
+                            </p:column>
+
+                            <p:column headerText="Email">
+                                <h:outputText value="#{user.email}"/>
+                            </p:column>
+
+
+                            <f:facet name="footer">
+                                <p:commandButton process="singleDT" update=":form:userDetail" style="width: 250px"
+                                                 icon="fa fa-search Fs16 White"
+                                                 value="#{msg.lbl_View}"
+                                                 oncomplete="PF('userInfoDialog').show()"/>
+                                <p:commandButton process="singleDT" update=":form:userDelete" style="width: 250px"
+                                                 icon="fa fa-trash Fs16 White"
+                                                 value="#{msg.lbl_Delete}"
+                                                 onclick="PF('userDeletDialog').show()"/>
+                                <!--<p:commandButton process="singleDT" style="width: 250px" update=":Edit:userEdit"
+                                                 icon="fa fa-pencil Fs16 White" value="#{msg.lbl_Edit}"
+                                                 onclick="PF('userEditDialog').show()"/>
+                               --> <p:commandButton process="singleDT" icon="fa fa-plus-circle Fs16 White"
+                                                 value="#{msg.lbl_New}" action="user/create"
+                                                 style="width: 250px"/>
+                            </f:facet>
+                        </p:dataTable>
+
+                        <p:dialog header="#{msg.lbl_Information}" widgetVar="userInfoDialog" showEffect="clip"
+                                  hideEffect="clip"
+                                  resizable="false" closable="true" modal="true">
+                            <p:outputPanel id="userDetail" style="text-align:center;">
+                                <p:panelGrid columns="2" rendered="#{not empty userBean.selectedUser}"
+                                             cellpadding="5">
+
+                                    <p:outputLabel value="#{msg.lbl_Fullname}"/>
+                                    <h:outputText value="#{userBean.selectedUser.fullname}"/>
+
+                                    <p:outputLabel value="#{msg.lbl_Username}"/>
+                                    <h:outputText value="#{userBean.selectedUser.username}"/>
+
+                                    <p:outputLabel value="Email"/>
+                                    <h:outputText value="#{userBean.selectedUser.email}"/>
+
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+                        <p:dialog header="#{msg.lbl_ConfirmDelete}" widgetVar="userDeletDialog" showEffect="fade"
+                                  hideEffect="fade"
+                                  resizable="false" global="true" modal="true">
+
+                            <p:outputPanel id="userDelete" style="text-align:center;">
+                                <h:outputText
+                                        value="#{msg.lbl_ConfirmDeleteLarg} #{userBean.selectedUser.fullname}"/>
+
+                                <h:panelGrid id="grid" rendered="#{not empty userBean.selectedUser}" columns="2"
+                                             cellpadding="5">
+
+                                    <p:commandButton icon="fa fa-trash Fs16 White" value="#{msg.lbl_Delete}"
+                                                     update=":form:singleDT" oncomplete="PF('userDeletDialog').hide()"
+                                                     actionListener="#{userBean.delete}"/>
+                                    <p:commandButton icon="fa fa-remove Fs16 White" value="#{msg.lbl_Cancel}"
+                                                     type="button" onclick="PF('userDeletDialog').hide()"/>
+                                </h:panelGrid>
+                            </p:outputPanel>
+
+                        </p:dialog>
+
+                    </h:form>
+
+<!--
+                    <h:form id="Edit">
+                        <p:dialog header="#{msg.lbl_Edit}" widgetVar="userEditDialog" showEffect="fold" hideEffect="fold"
+                                  resizable="false" closable="true" modal="true">
+
+                            <p:outputPanel id="userEdit" style="text-align:center;">
+
+
+                                <p:panelGrid columns="2" cellpadding="5">
+
+                                    <p:outputLabel value="Cod:" for="cod0"/>
+                                    <p:inputText id="cod0" value="#{userBean.selectedUser.id}"
+                                                 required="true"/>
+
+                                    <p:outputLabel value="#{msg.lbl_Fullname}:" for="ide0"/>
+                                    <p:inputText id="ide0" value="#{userBean.selectedUser.fullname}" required="true"/>
+
+                                    <p:outputLabel value="#{msg.lbl_Username}:" for="name0"/>
+                                    <p:inputText id="name0" value="#{userBean.selectedUser.username}"
+                                                 required="true"/>
+
+                                    <p:outputLabel value="Email:" for="email0"/>
+                                    <p:inputText id="email0" value="#{userBean.selectedUser.email}"
+                                                 required="true"/>
+
+                                </p:panelGrid>
+
+                                <p:separator/>
+
+                                <p:commandButton value="#{msg.lbl_Edit}" update=":form:singleDT"
+                                                 actionListener="#{userBean.update}"
+                                                 ajax="false" icon="fa fa-check Fs16 White">
+                                </p:commandButton>
+
+                            </p:outputPanel>
+
+                        </p:dialog>
+                    </h:form>
+-->
+
+                </div>
+            </div>
+        </div>
+
+
+    </ui:define>
+</ui:composition>
+</html>

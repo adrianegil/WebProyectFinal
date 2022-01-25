@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/pages/template/layout.xhtml">
+
+    <ui:define name="subheader">
+
+    </ui:define>
+    <ui:define name="content">
+
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <div class="Card ShadowEffect">
+
+                    <h:form id="form">
+
+                        <p:dataTable id="singleDT" var="driver" value="#{driverBean.driverList}" selectionMode="single"
+                                     selection="#{driverBean.selectedDriver}" rowKey="#{driver.drivCod}" rows="6"
+                                     paginator="true"
+                                     style="margin-top: 5px;" rendered="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}">
+
+                            <f:facet name="{Exporters}">
+                                <h:commandLink>
+                                    <i class="fa fa-fw fa-file-excel-o "/>
+                                    <p:dataExporter type="xls" target="singleDT" fileName="drivers"/>
+                                </h:commandLink>
+
+                                <h:commandLink>
+                                    <i class="fa fa-fw fa-file-pdf-o"/>
+                                    <p:dataExporter type="pdf" target="singleDT" fileName="drivers"/>
+                                </h:commandLink>
+                            </f:facet>
+
+                            <f:facet name="header">
+                                #{msg.lbl_ListofDrivers}
+                            </f:facet>
+
+                            <p:column headerText="Id">
+                                <h:outputText value="#{driver.drivId}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_Name}">
+                                <h:outputText value="#{driver.drivName}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_LastName}">
+                                <h:outputText value="#{driver.drivLastName}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_Address}">
+                                <h:outputText value="#{driver.drivAddress}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_Category}">
+                                <h:outputText value="#{driver.drivCat}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg.lbl_Available}">
+                                <h:outputText value="#{driver.available}"/>
+                            </p:column>
+
+                            <p:column headerText="email">
+                                <h:outputText value="#{driver.email}"/>
+                            </p:column>
+
+                            <f:facet name="footer">
+                                <p:commandButton process="singleDT" update=":form:driverDetail" style="width: 250px"
+                                                 icon="fa fa-search Fs16 White"
+                                                 value="#{msg.lbl_View}"
+                                                 oncomplete="PF('driverInfoDialog').show()"/>
+                                <p:commandButton process="singleDT" update=":form:driverDelete" style="width: 250px"
+                                                 icon="fa fa-trash Fs16 White"
+                                                 value="#{msg.lbl_Delete}"
+                                                 onclick="PF('driverDeletDialog').show()"/>
+                                <p:commandButton process="singleDT" style="width: 250px" update=":Edit:driverEdit"
+                                                 icon="fa fa-pencil Fs16 White" value="#{msg.lbl_Edit}"
+                                                 onclick="PF('driverEditDialog').show()"/>
+                                <p:commandButton process="singleDT" icon="fa fa-plus-circle Fs16 White"
+                                                 value="#{msg.lbl_New}"
+                                                 onclick="PF('driverAddDialog').show()" style="width: 250px"/>
+                            </f:facet>
+                        </p:dataTable>
+
+                        <p:dialog header="#{msg.lbl_Information}" widgetVar="driverInfoDialog" showEffect="clip"
+                                  hideEffect="clip"
+                                  resizable="false" closable="true" modal="true">
+                            <p:outputPanel id="driverDetail" style="text-align:center;">
+                                <p:panelGrid columns="2" rendered="#{not empty driverBean.selectedDriver}"
+                                             cellpadding="5">
+
+                                    <h:outputText value="Cod:"/>
+                                    <h:outputText value="#{driverBean.selectedDriver.drivCod}"/>
+
+                                    <h:outputText value="Id:"/>
+                                    <h:outputText value="#{driverBean.selectedDriver.drivId}"/>
+
+                                    <h:outputText value="#{msg.lbl_Name}:"/>
+                                    <h:outputText value="#{driverBean.selectedDriver.drivName}"/>
+
+                                    <h:outputText value="#{msg.lbl_LastName}:"/>
+                                    <h:outputText value="#{driverBean.selectedDriver.drivLastName}"/>
+
+                                    <h:outputText value="#{msg.lbl_Address}:"/>
+                                    <h:outputText value="#{driverBean.selectedDriver.drivAddress}"/>
+
+                                    <h:outputText value="#{msg.lbl_Category}:"/>
+                                    <h:outputText value="#{driverBean.selectedDriver.drivCat}"/>
+
+                                    <h:outputText value="#{msg.lbl_Available}:"/>
+                                    <h:outputText value="#{driverBean.selectedDriver.available}"/>
+
+                                    <h:outputText value="Email:"/>
+                                    <h:outputText value="#{driverBean.selectedDriver.email}"/>
+
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+                        <p:dialog header="#{msg.lbl_ConfirmDelete}" widgetVar="driverDeletDialog" showEffect="fade"
+                                  hideEffect="fade"
+                                  resizable="false" global="true" modal="true">
+
+                            <p:outputPanel id="driverDelete" style="text-align:center;">
+                                <h:outputText
+                                        value="#{msg.lbl_ConfirmDeleteLarg} #{driverBean.selectedDriver.drivName}"/>
+
+                                <h:panelGrid id="grid" rendered="#{not empty driverBean.selectedDriver}" columns="2"
+                                             cellpadding="5">
+
+                                    <p:commandButton icon="fa fa-trash Fs16 White" value="#{msg.lbl_Delete}"
+                                                     update=":form:singleDT" oncomplete="PF('driverDeletDialog').hide()"
+                                                     actionListener="#{driverBean.delete}" />
+                                    <p:commandButton icon="fa fa-remove Fs16 White" value="#{msg.lbl_Cancel}"
+                                                     type="button" onclick="PF('driverDeletDialog').hide()"/>
+                                </h:panelGrid>
+                            </p:outputPanel>
+
+                        </p:dialog>
+
+                    </h:form>
+
+                    <h:form id="Edit">
+                        <p:dialog header="#{msg.lbl_Edit}" widgetVar="driverEditDialog" showEffect="fold"
+                                  hideEffect="fold"
+                                  resizable="false" closable="true" modal="true">
+
+                            <p:outputPanel id="driverEdit" style="text-align:center;">
+
+                                <p:panelGrid id="EditDriver" columns="2" cellpadding="5">
+
+                                    <p:outputLabel value="Cod:" for="cod0" />
+                                    <p:inputText id="cod0" value="#{driverBean.selectedDriver.drivCod}"
+                                                 required="true" />
+
+                                    <p:outputLabel value="Id:" for="ide0" />
+                                    <p:inputText id="ide0" value="#{driverBean.selectedDriver.drivId}" required="true" validatorMessage="Only Numbers for Id">
+                                        <f:validateRegex pattern="^[0-9]*$" />
+
+                                    </p:inputText>
+
+                                    <p:outputLabel value="#{msg.lbl_Name}:" for="name0"  />
+                                    <p:inputText id="name0" value="#{driverBean.selectedDriver.drivName}" validatorMessage="Only Letters for #{msg.lbl_Name}"
+                                                 required="true">
+                                        <f:validateRegex  pattern="^[a-zA-Z ]*$" />
+                                    </p:inputText>
+
+                                    <p:outputLabel value="#{msg.lbl_LastName}:" for="lastname0" />
+                                    <p:inputText id="lastname0" value="#{driverBean.selectedDriver.drivLastName}" validatorMessage="Only Letters for #{msg.lbl_LastName}"
+                                                 required="true">
+                                        <f:validateRegex  pattern="^[a-zA-Z ]*$" />
+                                    </p:inputText>
+
+                                    <p:outputLabel value="#{msg.lbl_Address}:" for="address0"/>
+                                    <p:inputText id="address0" value="#{driverBean.selectedDriver.drivAddress}"
+                                                 required="true"/>
+
+                                    <p:outputLabel value="#{msg.lbl_Category}:" for="category0"/>
+                                    <p:selectOneMenu id="category0" value="#{driverBean.selectedDriver.drivCat}"
+                                                     style="width:125px" required="true">
+                                        <f:selectItem itemLabel="A" itemValue="A"/>
+                                        <f:selectItem itemLabel="B" itemValue="B"/>
+                                        <f:selectItem itemLabel="C" itemValue="C"/>
+                                        <f:selectItem itemLabel="D" itemValue="D"/>
+                                        <f:selectItem itemLabel="E" itemValue="E"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value="Email:" for="email0" required="true"/>
+                                    <p:inputText id="email0" value="#{driverBean.selectedDriver.email}"/>
+
+                                </p:panelGrid>
+
+                                <p:separator/>
+
+                                <p:commandButton value="#{msg.lbl_Edit}" update=":form:singleDT"
+                                                 actionListener="#{driverBean.update}" oncomplete="PF('driverEditDialog').hide()"
+                                                 icon="fa fa-check Fs16 White">
+                                </p:commandButton>
+
+                            </p:outputPanel>
+
+                        </p:dialog>
+                    </h:form>
+
+                    <p:dialog header="#{msg.lbl_NewDriver}" widgetVar="driverAddDialog" showEffect="clip"
+                              hideEffect="clip"
+                              resizable="false" closable="true" modal="true">
+                        <h:form id="addDriver">
+
+                            <p:panelGrid columns="2" cellpadding="5">
+
+
+                                <p:outputLabel value="Id:" for="ide"/>
+                                <p:inputText id="ide" value="#{driverBean.driver.drivId}" required="true"
+                                             maxlength="100" validatorMessage="Only Numbers for Id">
+                                    <f:validateRegex pattern="^[Z0-9]*$"/>
+                                </p:inputText>
+
+                                <p:outputLabel value="#{msg.lbl_Name}:" for="name"/>
+                                <p:inputText id="name" value="#{driverBean.driver.drivName}" required="true" validatorMessage="Only Letters for #{msg.lbl_Name}" >
+                                    <f:validateRegex  pattern="^[a-zA-Z ]*$" />
+                                </p:inputText>
+
+                                <p:outputLabel value="#{msg.lbl_LastName}:" for="lastname"/>
+                                <p:inputText id="lastname" value="#{driverBean.driver.drivLastName}" required="true" validatorMessage="Only Letters for #{msg.lbl_LastName}">
+                                    <f:validateRegex  pattern="^[a-zA-Z ]*$"  />
+                                </p:inputText>
+
+                                <p:outputLabel value="#{msg.lbl_Address}:" for="address"/>
+                                <p:inputText id="address" value="#{driverBean.driver.drivAddress}" required="true"/>
+
+                                <p:outputLabel value="#{msg.lbl_Category}:" for="category"/>
+                                <p:selectOneMenu id="category" value="#{driverBean.driver.drivCat}" effect="fold"
+                                                 required="true">
+                                    <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItem itemLabel="A" itemValue="A"/>
+                                    <f:selectItem itemLabel="B" itemValue="B"/>
+                                    <f:selectItem itemLabel="C" itemValue="C"/>
+                                    <f:selectItem itemLabel="D" itemValue="D"/>
+                                    <f:selectItem itemLabel="E" itemValue="E"/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="Email:" for="email" required="true"/>
+                                <p:inputText id="email" value="#{driverBean.driver.email}"
+                                             validatorMessage="Email is not valid">
+                                    <f:validateRegex
+                                            pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                                </p:inputText>
+
+                            </p:panelGrid>
+
+                            <p:separator/>
+
+                            <p:commandButton value="#{msg.lbl_Accept}" update=":form:singleDT"
+                                             actionListener="#{driverBean.save}" oncomplete="PF('driverAddDialog').hide()"
+                                              icon="fa fa-check Fs16 White"> </p:commandButton>
+
+                        </h:form>
+                    </p:dialog>
+
+                </div>
+            </div>
+        </div>
+
+
+    </ui:define>
+</ui:composition>
+</html>
